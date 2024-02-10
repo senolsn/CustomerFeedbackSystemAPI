@@ -12,5 +12,6 @@ namespace DataAccess.Concrete
 {
     public class EfComplaintDal:EfEntityRepositoryBase<Complaint,CustomerFeedbackSystemAPIContext>,IComplaintDal
     {
+
     }
 }

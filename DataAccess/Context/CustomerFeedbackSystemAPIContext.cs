@@ -18,10 +18,13 @@ namespace DataAccess.Context
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+          
+        }
     }
 }

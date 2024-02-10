@@ -1,22 +1,19 @@
-﻿using Core.Entities.Abstract;
-using Entities.enums;
+﻿using Entities.enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Business.Dto.Complaint
 {
-    public class Complaint : IEntity
+    public class CreateComplaintRequest
     {
-        public Guid ComplaintId { get; set; }
-        public Employee Employee { get; set; }
-        public Customer Customer { get; set; }
+        public Guid EmployeeId { get; set; }
+        public Guid CustomerId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
-        public ComplaintStatus ComplaintStatus { get; set; } = ComplaintStatus.INPROGRESS;
         public string? EmployeeNote { get; set; }
         public int Score { get; set; }
     }
