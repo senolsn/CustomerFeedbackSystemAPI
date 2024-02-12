@@ -15,10 +15,22 @@ namespace WebAPI.Controllers
             _complaintService = complaintService;
         }
 
-        [HttpPost]
-        public ActionResult Add(CreateComplaintRequest createComplaintRequest)
+        [HttpPost("Add")]
+        public IActionResult Add(CreateComplaintRequest createComplaintRequest)
         {
             var result = _complaintService.Add(createComplaintRequest);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpDelete("Delete")]
+        public IActionResult Delete(DeleteComplaintRequest deleteComplaintRequest) 
+        {
+            var result = _complaintService.Delete(deleteComplaintRequest);
 
             if (result.Success)
             {
@@ -32,6 +44,40 @@ namespace WebAPI.Controllers
         {
             var result = _complaintService.UpdateForCustomer(updateComplaintRequestForCustomer);
             if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPut("UpdateForEmployee")]
+        public IActionResult UpdateForEmployee(UpdateComplaintRequestForEmployee updateComplaintRequestForEmployee)
+        {
+            var result = _complaintService.UpdateForEmployee(updateComplaintRequestForEmployee);
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAllComplaints")]
+        public IActionResult GetAllComplaints()
+        {
+            var result = _complaintService.GetAllComplaints();
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetComplaintById")]
+        public IActionResult GetComplaintById(Guid complaintId) 
+        {
+            var result = _complaintService.GetComplaintById(complaintId);
+            if(result.Success )
             {
                 return Ok(result);
             }
@@ -62,11 +108,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetAllComplaints")]
-        public IActionResult GetAllComplaints()
+        [HttpGet("GetUnresolvedComplaintsByCustomerId")]
+        public IActionResult GetUnresolvedComplaintsByCustomerId(Guid customerId)
         {
-            var result = _complaintService.GetAllComplaints();
-
+            var result = _complaintService.GetUnresolvedComplaintsByCustomerId(customerId);
             if (result.Success)
             {
                 return Ok(result);
@@ -74,5 +119,15 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetUnresolvedComplaintsByEmployeeId")]
+        public IActionResult GetUnresolvedComplaintsByEmployeeId(Guid employeeId)
+        {
+            var result = _complaintService.GetUnresolvedComplaintsByEmployeeId(employeeId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }
