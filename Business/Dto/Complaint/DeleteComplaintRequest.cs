@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.enums
+namespace Business.Dto.Complaint
 {
-    public enum ComplaintStatus
+    public class DeleteComplaintRequest
     {
-        CREATED = 0,
-        INPROGRESS = 1,
-        RESOLVED = 2
+        public Guid ComplaintId { get; set; }
     }
 }

@@ -73,17 +73,14 @@ namespace DataAccess.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("EmployeeNote")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -167,6 +164,26 @@ namespace DataAccess.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("Entities.Rating", b =>
+                {
+                    b.Property<Guid>("RatingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ComplaintId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RatingStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("RatingId");
+
+                    b.HasIndex("ComplaintId")
+                        .IsUnique();
+
+                    b.ToTable("Rating");
+                });
+
             modelBuilder.Entity("Entities.Complaint", b =>
                 {
                     b.HasOne("Entities.Customer", "Customer")
@@ -184,6 +201,22 @@ namespace DataAccess.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Entities.Rating", b =>
+                {
+                    b.HasOne("Entities.Complaint", "Complaint")
+                        .WithOne("Rating")
+                        .HasForeignKey("Entities.Rating", "ComplaintId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Complaint");
+                });
+
+            modelBuilder.Entity("Entities.Complaint", b =>
+                {
+                    b.Navigation("Rating");
                 });
 
             modelBuilder.Entity("Entities.Customer", b =>

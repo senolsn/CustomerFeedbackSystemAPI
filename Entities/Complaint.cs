@@ -13,11 +13,11 @@ namespace Entities
         public Guid ComplaintId { get; set; }
         public Employee Employee { get; set; }
         public Customer Customer { get; set; }
+        public Rating? Rating { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
-        public ComplaintStatus ComplaintStatus { get; set; } = ComplaintStatus.INPROGRESS;
+        public ComplaintStatus ComplaintStatus { get; set; } = ComplaintStatus.CREATED;
         public string? EmployeeNote { get; set; }
-        public int Score { get; set; }
     }
 }

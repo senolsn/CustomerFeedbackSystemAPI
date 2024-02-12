@@ -80,11 +80,10 @@ namespace DataAccess.Migrations
                     EmployeeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ComplaintStatus = table.Column<int>(type: "int", nullable: false),
-                    EmployeeNote = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Score = table.Column<int>(type: "int", nullable: false)
+                    EmployeeNote = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,6 +102,25 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Rating",
+                columns: table => new
+                {
+                    RatingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RatingStatus = table.Column<int>(type: "int", nullable: false),
+                    ComplaintId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rating", x => x.RatingId);
+                    table.ForeignKey(
+                        name: "FK_Rating_Complaints_ComplaintId",
+                        column: x => x.ComplaintId,
+                        principalTable: "Complaints",
+                        principalColumn: "ComplaintId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Complaints_CustomerId",
                 table: "Complaints",
@@ -112,19 +130,28 @@ namespace DataAccess.Migrations
                 name: "IX_Complaints_EmployeeId",
                 table: "Complaints",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rating_ComplaintId",
+                table: "Rating",
+                column: "ComplaintId",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Complaints");
-
-            migrationBuilder.DropTable(
                 name: "OperationClaims");
 
             migrationBuilder.DropTable(
+                name: "Rating");
+
+            migrationBuilder.DropTable(
                 name: "UserOperationClaims");
+
+            migrationBuilder.DropTable(
+                name: "Complaints");
 
             migrationBuilder.DropTable(
                 name: "Customers");

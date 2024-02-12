@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Entities
@@ -16,6 +17,7 @@ namespace Entities
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
         public RoleType RoleType { get; set; }
+        [JsonIgnore]
         public ICollection<Complaint> Complaints { get; set; }
     }
 }

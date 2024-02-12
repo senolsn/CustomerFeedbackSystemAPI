@@ -26,6 +26,42 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        
+
+        [HttpGet("GetResolvedComplaintsByCustomerId")]
+        public IActionResult GetResolvedComplaintsByCustomerId(Guid customerId)
+        {
+            var result = _complaintService.GetResolvedComplaintsByCustomerId(customerId);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetResolvedComplaintsByEmployeeId")]
+        public IActionResult GetResolvedComplaintsByEmployeeId(Guid employeeId)
+        {
+            var result = _complaintService.GetResolvedComplaintsByEmployeeId(employeeId);
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAllComplaints")]
+        public IActionResult GetAllComplaints()
+        {
+            var result = _complaintService.GetAllComplaints();
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }

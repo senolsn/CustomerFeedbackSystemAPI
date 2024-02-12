@@ -4,6 +4,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities;
+using Entities.enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +28,9 @@ namespace Business.Concrete
         }
 
         public IResult Add(CreateComplaintRequest createComplaintRequest)
-        {
+        {    
             Complaint complaint = new Complaint()
             {
-                EmployeeNote = createComplaintRequest.EmployeeNote,
-                Score = createComplaintRequest.Score,
                 Description = createComplaintRequest.Description,
                 Title = createComplaintRequest.Title,
                 CreatedDate = DateTime.UtcNow,
@@ -52,44 +51,101 @@ namespace Business.Concrete
             return new ErrorResult();
         }
 
-        public IResult Delete(Complaint complaint)
+        public IResult Delete(DeleteComplaintRequest deleteComplaintRequest)
         {
-            throw new NotImplementedException();
+            var complaintToDelete = _complaintDal.Get(c => c.ComplaintId == deleteComplaintRequest.ComplaintId);
+            
+            if(complaintToDelete is not null)
+            {
+                _complaintDal.Delete(complaintToDelete);
+                return new SuccessResult();
+            }
+            return new ErrorResult();
         }
 
-        public IDataResult<List<Complaint>> GetAllComplaint()
+        public IResult Update(UpdateComplaintRequest updateComplaintRequest)
         {
-            throw new NotImplementedException();
+            //var complaintToUpdate = _complaintDal.Get(c => c.ComplaintId == updateComplaintRequest.ComplaintId);
+
+            //Complaint complaint = new Complaint()
+            //{
+            //    ComplaintId = updateComplaintRequest.ComplaintId,
+            //    Description = updateComplaintRequest.Description,
+            //    Title = updateComplaintRequest.Title,
+
+            //};
+            throw new Exception();
+
+        }
+
+        public IDataResult<IEnumerable<Complaint>> GetAllComplaints()
+        {
+            var data = _complaintDal.GetAll();
+
+            if(data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+
+            return new ErrorDataResult<IEnumerable<Complaint>>();
         }
 
         public IDataResult<Complaint> GetComplaintById(Guid complaintId)
         {
-            throw new NotImplementedException();
+            var data = _complaintDal.Get(c => c.ComplaintId ==  complaintId);
+
+            if(data is not null)
+            {
+                return new SuccessDataResult<Complaint>(data);
+            }
+            return new ErrorDataResult<Complaint>();
         }
 
-        public IDataResult<List<Complaint>> GetResolvedComplaintsByCustomerId(Guid customerId)
+        public IDataResult<IEnumerable<Complaint>> GetResolvedComplaintsByCustomerId(Guid customerId)
         {
-            throw new NotImplementedException();
+            var data = _complaintDal.GetAll(c => c.Customer.Id == customerId).Where(c => c.ComplaintStatus == ComplaintStatus.RESOLVED);
+            
+            if( data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+
+            return new ErrorDataResult<IEnumerable<Complaint>>();
         }
 
-        public IDataResult<List<Complaint>> GetResolvedComplaintsByEmployeeId(Guid employeeId)
+        public IDataResult<IEnumerable<Complaint>> GetResolvedComplaintsByEmployeeId(Guid employeeId)
         {
-            throw new NotImplementedException();
+            var data = _complaintDal.GetAll(c => c.Employee.Id == employeeId).Where(c => c.ComplaintStatus == ComplaintStatus.RESOLVED);
+
+            if( data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+            return new ErrorDataResult<IEnumerable<Complaint>>();
         }
 
-        public IDataResult<List<Complaint>> GetUnresolvedComplaintsByCustomerId(Guid customerId)
+        public IDataResult<IEnumerable<Complaint>> GetUnresolvedComplaintsByCustomerId(Guid customerId)
         {
-            throw new NotImplementedException();
+            var data = _complaintDal.GetAll(c => c.Customer.Id == customerId).Where(c => c.ComplaintStatus == ComplaintStatus.INPROGRESS);
+
+            if( data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+            return new ErrorDataResult<IEnumerable<Complaint>>();
         }
 
-        public IDataResult<List<Complaint>> GetUnresolvedComplaintsByEmployeeId(Guid employeeId)
+        public IDataResult<IEnumerable<Complaint>> GetUnresolvedComplaintsByEmployeeId(Guid employeeId)
         {
-            throw new NotImplementedException();
+            var data = _complaintDal.GetAll(c => c.Employee.Id == employeeId).Where(c => c.ComplaintStatus == ComplaintStatus.INPROGRESS);
+
+            if( data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+            return new ErrorDataResult<IEnumerable<Complaint>>();
         }
 
-        public IResult Update(Complaint complaint)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
