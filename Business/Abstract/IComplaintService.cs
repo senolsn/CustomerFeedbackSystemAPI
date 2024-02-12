@@ -14,7 +14,7 @@ namespace Business.Abstract
         IResult Add(CreateComplaintRequest createComplaintRequest);
         IResult Update(Complaint complaint);
         IResult Delete(Complaint complaint);
-        IDataResult<List<Complaint>> GetAllComplaint();
+        IDataResult<IEnumerable<Complaint>> GetAllComplaint();
         IDataResult<Complaint> GetComplaintById(Guid complaintId);
 
         //Employee
