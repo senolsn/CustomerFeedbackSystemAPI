@@ -28,5 +28,19 @@ namespace DataAccess.Concrete
             }
         }
 
+        public override void Update(Complaint entity)
+        {
+            using (var context = new CustomerFeedbackSystemAPIContext())
+            {
+                var updatedEntity = context.Entry(entity);
+
+                context.Entry(entity.Employee).State = EntityState.Modified; //Entity Framework'un değişikliği anlaması için modified olarak işaretlenmesi gerekiyor.
+                context.Entry(entity.Customer).State = EntityState.Modified; //Entity Framework'un değişikliği anlaması için modified olarak işaretlenmesi gerekiyor.
+                updatedEntity.State = EntityState.Modified;
+
+                context.SaveChanges();
+            }
+        }
+
     }
 }

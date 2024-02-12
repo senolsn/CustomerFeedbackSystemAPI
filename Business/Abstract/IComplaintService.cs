@@ -12,7 +12,8 @@ namespace Business.Abstract
     public interface IComplaintService
     {
         IResult Add(CreateComplaintRequest createComplaintRequest);
-        IResult Update(UpdateComplaintRequest updateComplaintRequest);
+        IResult UpdateForEmployee(UpdateComplaintRequestForEmployee updateComplaintRequestForEmployee);
+        IResult UpdateForCustomer(UpdateComplaintRequestForCustomer updateComplaintRequestForCustomer);
         IResult Delete(DeleteComplaintRequest deleteComplaintRequest);
         IDataResult<IEnumerable<Complaint>> GetAllComplaints();
         IDataResult<Complaint> GetComplaintById(Guid complaintId);

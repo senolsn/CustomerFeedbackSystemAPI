@@ -27,6 +27,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPut("UpdateForCustomer")]
+        public IActionResult UpdateForCustomer(UpdateComplaintRequestForCustomer updateComplaintRequestForCustomer) 
+        {
+            var result = _complaintService.UpdateForCustomer(updateComplaintRequestForCustomer);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("GetResolvedComplaintsByCustomerId")]
         public IActionResult GetResolvedComplaintsByCustomerId(Guid customerId)
         {
