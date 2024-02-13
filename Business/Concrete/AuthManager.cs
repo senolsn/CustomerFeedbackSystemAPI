@@ -106,7 +106,8 @@ namespace Business.Concrete
                 FirstName = customerRegisterDto.FirstName,
                 LastName = customerRegisterDto.LastName,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                RoleType = RoleType.CUSTOMER
             };
             _customerService.Add(customer);
             return new SuccessDataResult<Customer>(customer);
@@ -122,7 +123,8 @@ namespace Business.Concrete
                 FirstName = employeeRegisterDto.FirstName,
                 LastName = employeeRegisterDto.LastName,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                RoleType = RoleType.EMPLOYEE
             };
             _employeeService.Add(employee);
             return new SuccessDataResult<Employee>(employee);
