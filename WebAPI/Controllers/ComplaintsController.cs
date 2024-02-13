@@ -1,5 +1,5 @@
 ﻿using Business.Abstract;
-using Business.Dto.Complaint;
+using Business.Dto.ComplaintRequests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

@@ -1,16 +1,12 @@
 ﻿using Business.Abstract;
-using Business.Dto.Complaint;
+using Business.Dto.ComplaintRequests;
 using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities;
 using Entities.enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Business.Concrete
 {

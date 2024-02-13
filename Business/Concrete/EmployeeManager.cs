@@ -27,6 +27,18 @@ namespace Business.Concrete
             _employeeDal.Add(employee);
         }
 
+        public IDataResult<IEnumerable<Employee>> GetAll()
+        {
+            var data = _employeeDal.GetAll();
+
+            if(data is null)
+            {
+                return new ErrorDataResult<IEnumerable<Employee>>();
+            }
+
+            return new SuccessDataResult<IEnumerable<Employee>>(data);  
+        }
+
         public IDataResult<Employee> GetById(Guid employeeId)
         {
             var data = _employeeDal.Get(e => e.Id == employeeId);
@@ -58,5 +70,7 @@ namespace Business.Concrete
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

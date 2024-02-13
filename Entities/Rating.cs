@@ -1,4 +1,5 @@
-﻿using Entities.enums;
+﻿using Core.Entities.Abstract;
+using Entities.enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class Rating
+    public class Rating:IEntity
     {
         public Guid RatingId { get; set; }
         public RatingStatus RatingStatus { get; set; }

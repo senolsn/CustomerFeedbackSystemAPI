@@ -1,4 +1,4 @@
-﻿using Business.Dto.Complaint;
+﻿using Business.Dto.ComplaintRequests;
 using Core.Utilities.Results.Abstract;
 using Entities;
 using System;

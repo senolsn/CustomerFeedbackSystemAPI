@@ -19,6 +19,9 @@ namespace Business.Abstract
         IDataResult<Employee> GetByMail(string email);
         IResult UserForUpdate(EmployeeUpdateDto employeeUpdateDto);
 
+        IDataResult<IEnumerable<Employee>> GetAll();
+
         IDataResult<Employee> GetById(Guid employeeId);
+
     }
 }
