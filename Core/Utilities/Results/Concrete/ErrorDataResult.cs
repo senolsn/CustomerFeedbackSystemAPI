@@ -24,7 +24,7 @@ namespace Core.Utilities.Results.Concrete
             
         }
 
-        public ErrorDataResult():base(true)
+        public ErrorDataResult():base(false)
         {
             
         }

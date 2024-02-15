@@ -65,7 +65,7 @@ namespace Business.Concrete
         {
             var customerToCheck = _customerService.GetByMail(customerLoginDto.Email);
 
-            if(customerToCheck is null)
+            if(!customerToCheck.Success)
             {
                 return new ErrorDataResult<Customer>();
             }
@@ -82,7 +82,7 @@ namespace Business.Concrete
         {
             var employeeToCheck = _employeeService.GetByMail(employeeRegisterDto.Email);
 
-            if (employeeToCheck is null)
+            if (!employeeToCheck.Success)
             {
                 return new ErrorDataResult<Employee>();
             }

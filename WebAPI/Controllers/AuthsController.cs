@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Dto.Auth;
+using Core.Utilities.Results.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -50,6 +51,42 @@ namespace WebAPI.Controllers
             var result = _authService.CreateCustomerAccessToken(registerForCustomer.Data);
 
             if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("LoginForEmployee")]
+        public ActionResult LoginForEmployee(EmployeeLoginDto employeeLoginDto)
+        {
+            var userToLogin = _authService.EmployeeLogin(employeeLoginDto);
+
+            if (!userToLogin.Success)
+            {
+                return BadRequest(userToLogin.Message);
+            }
+
+            var result = _authService.CreateEmployeeAccessToken(userToLogin.Data);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("LoginForCustomer")]
+        public ActionResult LoginForCustomer(CustomerLoginDto customerLoginDto)
+        {
+            var userToLogin = _authService.CustomerLogin(customerLoginDto);
+
+            if (!userToLogin.Success)
+            {
+                return BadRequest(userToLogin.Message);
+            }
+
+            var result = _authService.CreateCustomerAccessToken(userToLogin.Data);
+            if (result.Success)
             {
                 return Ok(result);
             }
