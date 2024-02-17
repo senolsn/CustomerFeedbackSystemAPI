@@ -26,7 +26,7 @@ namespace Business.Concrete
 
         public IResult Add(CreateComplaintRequest createComplaintRequest)
         {
-            var rules = BusinessRules.Run(CanAssignMoreComplaintsToEmployee(createComplaintRequest));
+            var rules = BusinessRules.Run(CanAssignMoreComplaintsToEmployee(createComplaintRequest),CanAssignMoreCreatedComplaintsToEmployee(createComplaintRequest));
 
             if(rules is not null)
             {
@@ -141,6 +141,26 @@ namespace Business.Concrete
             return new ErrorDataResult<IEnumerable<Complaint>>();
         }
 
+        public IDataResult<IEnumerable<Complaint>> GetAllResolvedComplaints()
+        {
+            var data = _complaintDal.GetAll(c => c.ComplaintStatus == ComplaintStatus.RESOLVED);
+            if(data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+            return new ErrorDataResult<IEnumerable<Complaint>>();
+        }
+
+        public IDataResult<IEnumerable<Complaint>> GetAllUnsolvedComplaints()
+        {
+            var data = _complaintDal.GetAll(c => c.ComplaintStatus == ComplaintStatus.INPROGRESS || c.ComplaintStatus == ComplaintStatus.CREATED);
+            if (data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+            return new ErrorDataResult<IEnumerable<Complaint>>();
+        }
+
         public IDataResult<Complaint> GetComplaintById(Guid complaintId)
         {
             var data = _complaintDal.Get(c => c.ComplaintId ==  complaintId);
@@ -197,6 +217,16 @@ namespace Business.Concrete
             return new ErrorDataResult<IEnumerable<Complaint>>();
         }
 
+        public IDataResult<IEnumerable<Complaint>> GetCreatedComplaintsByEmployeeId(Guid employeeId)
+        {
+            var data = _complaintDal.GetAll(c => c.Employee.Id == employeeId).Where(c => c.ComplaintStatus == ComplaintStatus.CREATED);
+            if(data is not null)
+            {
+                return new SuccessDataResult<IEnumerable<Complaint>>(data);
+            }
+            return new ErrorDataResult<IEnumerable<Complaint>>();
+        }
+
 
 
         //HELPER METHODS
@@ -225,6 +255,16 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
+        private IResult CanAssignMoreCreatedComplaintsToEmployee(CreateComplaintRequest createComplaintRequest)
+        {
+            var createdComplaints = GetCreatedComplaintsByEmployeeId(createComplaintRequest.EmployeeId);
+
+            if (createdComplaints.Data.Count() > 5)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
         private IResult CanAssignMoreComplaintsToEmployee(UpdateComplaintRequestForCustomer updateComplaintRequestForCustomer)
         {
             var unresolvedComplaints = GetUnresolvedComplaintsByEmployeeId(updateComplaintRequestForCustomer.EmployeeId);
@@ -246,5 +286,6 @@ namespace Business.Concrete
             }
             return new ErrorResult("Müşteri şikayeti kapatmadığından dolayı minimum 3 günden önce şikayet kapatılamaz!");
         }
+
     }
 }

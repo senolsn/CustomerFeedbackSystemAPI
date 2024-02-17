@@ -16,11 +16,14 @@ namespace Business.Abstract
         IResult UpdateForCustomer(UpdateComplaintRequestForCustomer updateComplaintRequestForCustomer);
         IResult Delete(DeleteComplaintRequest deleteComplaintRequest);
         IDataResult<IEnumerable<Complaint>> GetAllComplaints();
+        IDataResult<IEnumerable<Complaint>> GetAllResolvedComplaints();
+        IDataResult<IEnumerable<Complaint>> GetAllUnsolvedComplaints();
         IDataResult<Complaint> GetComplaintById(Guid complaintId);
 
         //Employee
         IDataResult<IEnumerable<Complaint>> GetUnresolvedComplaintsByEmployeeId(Guid employeeId); //Çözülmemiş Şikayetleri Listeler.
         IDataResult<IEnumerable<Complaint>> GetResolvedComplaintsByEmployeeId(Guid employeeId); //Çözülmüş Şikayetleri Listeler.
+        IDataResult<IEnumerable<Complaint>> GetCreatedComplaintsByEmployeeId(Guid employeeId);  //Oluşturulmuş şikayetleri getirir.
 
         //Customer
         IDataResult<IEnumerable<Complaint>> GetUnresolvedComplaintsByCustomerId(Guid customerId); //Çözülmemiş Şikayetleri Listeler.

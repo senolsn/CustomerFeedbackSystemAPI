@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Dto.ComplaintRequests;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -28,7 +29,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("Delete")]
-        public IActionResult Delete(DeleteComplaintRequest deleteComplaintRequest) 
+        public IActionResult Delete(DeleteComplaintRequest deleteComplaintRequest)
         {
             var result = _complaintService.Delete(deleteComplaintRequest);
 
@@ -40,7 +41,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("UpdateForCustomer")]
-        public IActionResult UpdateForCustomer(UpdateComplaintRequestForCustomer updateComplaintRequestForCustomer) 
+        public IActionResult UpdateForCustomer(UpdateComplaintRequestForCustomer updateComplaintRequestForCustomer)
         {
             var result = _complaintService.UpdateForCustomer(updateComplaintRequestForCustomer);
             if (result.Success)
@@ -54,7 +55,7 @@ namespace WebAPI.Controllers
         public IActionResult UpdateForEmployee(UpdateComplaintRequestForEmployee updateComplaintRequestForEmployee)
         {
             var result = _complaintService.UpdateForEmployee(updateComplaintRequestForEmployee);
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result);
             }
@@ -74,10 +75,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetComplaintById")]
-        public IActionResult GetComplaintById(Guid complaintId) 
+        public IActionResult GetComplaintById(Guid complaintId)
         {
             var result = _complaintService.GetComplaintById(complaintId);
-            if(result.Success )
+            if (result.Success)
             {
                 return Ok(result);
             }
@@ -123,6 +124,39 @@ namespace WebAPI.Controllers
         public IActionResult GetUnresolvedComplaintsByEmployeeId(Guid employeeId)
         {
             var result = _complaintService.GetUnresolvedComplaintsByEmployeeId(employeeId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetCreatedComplaintsByEmployeeId")]
+        public IActionResult GetCreatedComplaintsByEmployeeId(Guid employeeId)
+        {
+            var result = _complaintService.GetCreatedComplaintsByEmployeeId(employeeId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAllUnsolvedComplaints")]
+        public IActionResult GetAllUnsolvedComplaints()
+        {
+            var result = _complaintService.GetAllUnsolvedComplaints();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAllResolvedComplaints")]
+        public IActionResult GetAllResolvedComplaints()
+        {
+            var result = _complaintService.GetAllResolvedComplaints();
             if (result.Success)
             {
                 return Ok(result);
