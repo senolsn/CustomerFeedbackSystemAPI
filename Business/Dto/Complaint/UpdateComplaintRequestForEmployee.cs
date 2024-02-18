@@ -15,6 +15,6 @@ namespace Business.Dto.ComplaintRequests
         public string Title { get; set; }
         public string Description { get; set; }
         public ComplaintStatus ComplaintStatus { get; set; }
-        public string? EmployeeNote { get; set; } = "Müşterimizin Şikayeti Çözülmüştür!";
+        public string? EmployeeNote { get; set; }
     }
 }

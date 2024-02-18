@@ -280,7 +280,7 @@ namespace Business.Concrete
             var complaint = _complaintDal.Get(c => c.ComplaintId == updateComplaintRequestForEmployee.ComplaintId);
             var result = (DateTime.Now - complaint.CreatedDate).TotalDays;
 
-            if( result > 3)
+            if( result > 3 || complaint.ComplaintStatus == ComplaintStatus.CREATED)
             {
                 return new SuccessResult();
             }

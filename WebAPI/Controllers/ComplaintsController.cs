@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpDelete("Delete")]
+        [HttpPost("Delete")]
         public IActionResult Delete(DeleteComplaintRequest deleteComplaintRequest)
         {
             var result = _complaintService.Delete(deleteComplaintRequest);
