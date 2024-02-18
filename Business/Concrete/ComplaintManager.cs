@@ -100,7 +100,9 @@ namespace Business.Concrete
 
         public IResult UpdateForEmployee(UpdateComplaintRequestForEmployee updateComplaintRequestForEmployee)
         {
-            var rules = BusinessRules.Run(CanChangeComplaintStatusForEmployee(updateComplaintRequestForEmployee));
+            var rules = BusinessRules.Run(
+                //CanChangeComplaintStatusForEmployee(updateComplaintRequestForEmployee)
+                );
 
             if(rules is not null)
             {
@@ -261,7 +263,7 @@ namespace Business.Concrete
 
             if (createdComplaints.Data.Count() > 5)
             {
-                return new ErrorResult();
+                return new ErrorResult("Bu çalışana ait şikayet kotası dolmuştur. Lütfen daha sonra tekrar deneyiniz!");
             }
             return new SuccessResult();
         }
@@ -269,9 +271,9 @@ namespace Business.Concrete
         {
             var unresolvedComplaints = GetUnresolvedComplaintsByEmployeeId(updateComplaintRequestForCustomer.EmployeeId);
 
-            if (unresolvedComplaints.Data.Count() > 5)
+            if (unresolvedComplaints.Data.Count() > 3)
             {
-                return new ErrorResult();
+                return new ErrorResult("Bir çalışan aynı anda en fazla 3 şikayete bakabilir. Lütfen daha sonra tekrar deneyiniz!");
             }
             return new SuccessResult();
         }
@@ -285,7 +287,7 @@ namespace Business.Concrete
                 return new SuccessResult();
             }
             return new ErrorResult("Müşteri şikayeti kapatmadığından dolayı minimum 3 günden önce şikayet kapatılamaz!");
-        }
+        } //İptal edildi
 
     }
 }
